@@ -4,6 +4,14 @@ export default {
    content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
    theme: {
       extend: {
+         fontSize: {
+            h1: ["2.25rem", { lineHeight: "2.5rem", fontWeight: "700" }], // 36px
+            h2: ["1.875rem", { lineHeight: "2.25rem", fontWeight: "600" }], // 30px
+            h3: ["1.5rem", { lineHeight: "2rem", fontWeight: "600" }], // 24px
+            h4: ["1.25rem", { lineHeight: "1.75rem", fontWeight: "500" }], // 20px
+            h5: ["1.125rem", { lineHeight: "1.5rem", fontWeight: "500" }], // 18px
+            h6: ["1rem", { lineHeight: "1.25rem", fontWeight: "500" }], // 16px
+         },
          borderRadius: {
             lg: "var(--radius)",
             md: "calc(var(--radius) - 2px)",
@@ -49,6 +57,16 @@ export default {
                3: "hsl(var(--chart-3))",
                4: "hsl(var(--chart-4))",
                5: "hsl(var(--chart-5))",
+            },
+            sidebar: {
+               DEFAULT: "hsl(var(--sidebar-background))",
+               foreground: "hsl(var(--sidebar-foreground))",
+               primary: "hsl(var(--sidebar-primary))",
+               "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+               accent: "hsl(var(--sidebar-accent))",
+               "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+               border: "hsl(var(--sidebar-border))",
+               ring: "hsl(var(--sidebar-ring))",
             },
          },
       },

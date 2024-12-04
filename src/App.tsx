@@ -1,12 +1,16 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import "./App.css";
-import { ModeToggle } from "@/components/ModeToggle/mode-toggle";
+
+import Layout from "./layout";
 
 function App() {
    return (
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-         <h1>Hello moto!</h1>
-         <ModeToggle />
+         <Layout>
+            <div className='flex w-full flex-col items-center justify-center gap-4 p-4'>
+               <h1>Budget Calculator</h1>
+            </div>
+         </Layout>
       </ThemeProvider>
    );
 }
