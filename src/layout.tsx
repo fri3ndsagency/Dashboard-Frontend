@@ -11,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                <SidebarTrigger variant='ghost' />
                <div className='flex text-xs'>Or press ⌘ + B</div>
             </div>
-
             {children}
          </main>
       </SidebarProvider>

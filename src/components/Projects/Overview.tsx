@@ -11,7 +11,7 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
-import { useNavigate } from 'react-router';
+import { useNavigate } from "react-router";
 
 const Overview = () => {
    const [projects, setProjects] = useState<any[]>([]);
@@ -50,10 +50,6 @@ const Overview = () => {
       fetchData();
    }, []);
 
-   const handleClick = () => {
-      navigate(`/projects/${id}`);
-   };
-
    return (
       <div>
          <h1 className='mt-4 mb-4'>Projects View</h1>
@@ -78,7 +74,9 @@ const Overview = () => {
                         <TableHead>Project Name</TableHead>
                         <TableHead>Client Name</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead>Actions</TableHead>
+                        <TableHead className='text-center pl-5'>
+                           Actions
+                        </TableHead>
                      </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -96,7 +94,13 @@ const Overview = () => {
                               </span>
                            </TableCell>
                            <TableCell className='text-right'>
-                              <Button onClick={handleClick} variant='secondary'>
+                              <Button
+                                 onClick={() => {
+                                    // Reemplaza esto con la lógica de navegación dinámica
+                                    window.location.href = `/projects/${project.id}`;
+                                 }}
+                                 variant='secondary'
+                              >
                                  View Details
                               </Button>
                            </TableCell>
