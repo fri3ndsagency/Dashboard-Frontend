@@ -11,7 +11,6 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
-import { useNavigate } from "react-router";
 
 const Overview = () => {
    const [projects, setProjects] = useState<any[]>([]);
@@ -19,7 +18,6 @@ const Overview = () => {
    const [searchTerm, setSearchTerm] = useState<string>(""); // Término de búsqueda
    const [loading, setLoading] = useState<boolean>(true);
 
-   const navigate = useNavigate();
 
    const fetchData = async () => {
       try {
@@ -74,7 +72,7 @@ const Overview = () => {
                         <TableHead>Project Name</TableHead>
                         <TableHead>Client Name</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead className='text-center pl-5'>
+                        <TableHead className='opacity-0'>
                            Actions
                         </TableHead>
                      </TableRow>
@@ -99,7 +97,7 @@ const Overview = () => {
                                     // Reemplaza esto con la lógica de navegación dinámica
                                     window.location.href = `/projects/${project.id}`;
                                  }}
-                                 variant='secondary'
+                                 variant="default"
                               >
                                  View Details
                               </Button>
