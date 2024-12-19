@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className='flex items-center mt-2'>
                {" "}
                <SidebarTrigger variant='ghost' />
-               <div className='flex text-xs'>Or press ⌘ + B</div>
+               {/* <div className='flex text-xs'>Or press ⌘ + B</div> */}
             </div>
             {children}
          </main>

@@ -1,25 +1,55 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-
 import Layout from "./layout";
+import PrivateRoute from "./utils/PrivateRoute";
 import DashboardView from "./views/DashboardView";
 import ProjectsView from "./views/ProjectsView";
-import ProjectDetailView from './views/ProjectDetailView';
+import ClientsView from "./views/ClientsView";
+import LoginView from "./views/LoginView";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
    return (
-      <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-         <Layout>
+      <AuthProvider>
+         <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
             <Router>
                <Routes>
-                  <Route path='/' element={<DashboardView />} />
-                  <Route path='/projects' element={<ProjectsView />} />
-                  <Route path='/projects/:id' element={<ProjectDetailView />} />
+                  <Route path='/login' element={<LoginView />} />
+                  <Route
+                     path='/'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <DashboardView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/clients'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <ClientsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/projects'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <ProjectsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
                </Routes>
             </Router>
-         </Layout>
-      </ThemeProvider>
+         </ThemeProvider>
+      </AuthProvider>
    );
 }
 
