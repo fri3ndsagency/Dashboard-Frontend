@@ -1,5 +1,7 @@
 // components/ClientsList.tsx
+import { useState } from "react";
 import { useClients } from "../../hooks/services/useClient";
+import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,14 +13,13 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
+import AddClientModal from "./AddClientModal";
 
 const ClientsList = () => {
    const { clients, isLoading, error, createClient } = useClients();
+   const [isModalOpen, setIsModalOpen] = useState(false);
 
-   console.log(clients);
-
-   const handleCreate = () => {
-      const newClient = { name: "Nuevo Cliente", email: "cliente@mail.com" };
+   const handleCreateClient = (newClient) => {
       createClient(newClient);
    };
 
@@ -27,7 +28,16 @@ const ClientsList = () => {
 
    return (
       <div>
-         <h1 className="mt-4">Clients</h1>
+         <div className='flex items-center justify-between'>
+            <h1 className='mt-4'>Clients</h1>
+            <Button
+               onClick={() => setIsModalOpen(true)}
+               variant='default'
+               size='sm'
+            >
+               <PlusCircle /> Create Client
+            </Button>
+         </div>
          {isLoading ? (
             <p>Loading...</p>
          ) : (
@@ -50,24 +60,49 @@ const ClientsList = () => {
                            <TableCell>{client.email}</TableCell>
                            <TableCell>
                               <span className='capitalize'>
-                                 {client.state ? "Active" : "Inactive"}
+                                 {client.active ? "Active" : "Inactive"}
                               </span>
                            </TableCell>
                            <TableCell className='text-right'>
-                              <Button
-                                 onClick={() => {
-                                    alert("todavia no anda paciencia paaa");
-                                 }}
-                                 variant='outline'
-                                 size='sm'
-                              >
-                                 View Details
-                              </Button>
+                              <div className='flex justify-end gap-2'>
+                                 <Button
+                                    onClick={() => {
+                                       alert("todavia no anda paciencia paaa");
+                                    }}
+                                    variant='outline'
+                                    size='sm'
+                                 >
+                                    Edit
+                                 </Button>
+                                 <Button
+                                    onClick={() => {
+                                       alert("todavia no anda paciencia paaa");
+                                    }}
+                                    variant='outline'
+                                    size='sm'
+                                 >
+                                    Delete
+                                 </Button>
+                                 <Button
+                                    onClick={() => {
+                                       alert("todavia no anda paciencia paaa");
+                                    }}
+                                    variant='outline'
+                                    size='sm'
+                                 >
+                                    Summary
+                                 </Button>
+                              </div>
                            </TableCell>
                         </TableRow>
                      ))}
                   </TableBody>
                </Table>
+               <AddClientModal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  onSubmit={handleCreateClient}
+               />
             </div>
          )}
       </div>
