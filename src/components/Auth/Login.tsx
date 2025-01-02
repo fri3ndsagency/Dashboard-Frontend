@@ -17,7 +17,7 @@ const Login = () => {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [isLoading, setIsLoading] = useState(false);
-   const [error, setError] = useState(null);
+   const [error, setError] = useState<string | null>(null);
 
    const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,7 @@ const Login = () => {
 
    const { login } = useAuth();
 
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       setIsLoading(true);
       setError(null);
@@ -37,7 +37,11 @@ const Login = () => {
          setIsLoading(false);
          navigate("/");
       } catch (err) {
-         setError(err.message);
+         if (err instanceof Error) {
+            setError(err.message);
+         } else {
+            setError("An unknown error occurred.");
+         }
          setIsLoading(false);
       }
    };
@@ -101,7 +105,7 @@ const Login = () => {
             </CardContent>
             <CardFooter className='flex flex-col'>
                <Button onClick={handleSubmit} className='w-full'>
-                  Sign In
+                  {isLoading ? "Please wait..." : "Login"}
                </Button>
                {error && <p className='mt-2 text-sm text-red-600'>{error}</p>}
             </CardFooter>

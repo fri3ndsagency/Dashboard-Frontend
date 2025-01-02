@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useClients } from "../../hooks/services/useClient";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
    Table,
    TableBody,
@@ -14,12 +12,13 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import AddClientModal from "./AddClientModal";
+import { Client } from "@/interfaces/clientInterface";
 
 const ClientsList = () => {
    const { clients, isLoading, error, createClient } = useClients();
    const [isModalOpen, setIsModalOpen] = useState(false);
 
-   const handleCreateClient = (newClient) => {
+   const handleCreateClient = (newClient: Omit<Client, "_id">) => {
       createClient(newClient);
    };
 

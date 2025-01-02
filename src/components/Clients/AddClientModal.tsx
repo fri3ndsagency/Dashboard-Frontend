@@ -9,22 +9,29 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Client } from "@/interfaces/clientInterface";
 
-function AddClientModal({ isOpen, onClose, onSubmit }) {
+interface AddClientModalProps {
+   isOpen: boolean;
+   onClose: () => void;
+   onSubmit: (clientData: Omit<Client, "_id">) => void;
+}
+
+function AddClientModal({ isOpen, onClose, onSubmit }: AddClientModalProps) {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
 
-   const handleSubmit = (e) => {
+   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!name || !email) {
          alert("Name and email are required.");
          return;
       }
-      onSubmit({ name, email, state: true }); // Enviar los datos al callback
-      setName(""); // Limpiar inputs
+      onSubmit({ name, email, active: true });
+      setName("");
       setEmail("");
 
-      onClose(); // Cerrar el modal
+      onClose();
    };
 
    return (
