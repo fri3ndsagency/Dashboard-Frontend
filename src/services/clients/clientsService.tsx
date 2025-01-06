@@ -1,6 +1,6 @@
 // services/clientsService.tsx
 import axiosInstance from "@/services/axiosConfig";
-import { Client } from "@/interfaces/clientInterface";
+import { Client, UpdateClientData } from "@/interfaces/clientInterface";
 
 const CLIENTS_SERVICE = import.meta.env.VITE_SERVICE_CLIENTS;
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -28,7 +28,7 @@ export const clientsService = {
       return response.data;
    },
 
-   updateClient: async (id: string, clientData: Client) => {
+   updateClient: async (id: string, clientData: UpdateClientData) => {
       const response = await axiosInstance.put(
          `${API_BASE_URL}${CLIENTS_SERVICE}/${id}`,
          clientData

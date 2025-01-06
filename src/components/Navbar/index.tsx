@@ -7,11 +7,11 @@ const Navbar = () => {
    const { userData, logout } = useAuth();
 
    return (
-      <div className='flex gap-2 p-2'>
+      <div className='flex items-center gap-2 p-2'>
          <Button variant='outline' className='rounded-full'>
             <Link to='/me'>{userData?.email}</Link>
          </Button>
-         <Button onClick={logout} variant='ghost'>
+         <Button onClick={logout} variant='ghost' size='sm'>
             <LogOut />
          </Button>
       </div>

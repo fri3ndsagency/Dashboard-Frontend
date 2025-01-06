@@ -4,3 +4,9 @@ export interface Client {
    email: string;
    active: boolean;
 }
+
+export type UpdateClientData = {
+   name?: string;
+   email?: string;
+   active: boolean;
+};

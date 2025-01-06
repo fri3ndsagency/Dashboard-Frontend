@@ -14,15 +14,24 @@ import {
 import AddClientModal from "./AddClientModal";
 import { Client } from "@/interfaces/clientInterface";
 import DeleteDialog from "../Commons/DeleteDialog";
+import UpdateClientModal from "./UpdateClientModal";
 
 const ClientsList = () => {
-   const { clients, isLoading, error, createClient, deleteClient } =
-      useClients();
+   const {
+      clients,
+      isLoading,
+      error,
+      createClient,
+      deleteClient,
+      updateClient,
+   } = useClients();
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
    const [selectedClientId, setSelectedClientId] = useState<string | null>(
       null
    );
+   const [editDialogOpen, setEditDialogOpen] = useState(false);
+   const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
 
    const handleCreateClient = (newClient: Omit<Client, "_id">) => {
       createClient(newClient);
@@ -33,12 +42,28 @@ const ClientsList = () => {
       setDeleteDialogOpen(true);
    };
 
-   // Cerrar el diálogo
    const handleCloseDeleteDialog = () => {
       setDeleteDialogOpen(false);
       setSelectedClientId(null);
    };
-   
+
+   const handleOpenEditDialog = (client: Client) => {
+      setClientToEdit(client);
+      setEditDialogOpen(true);
+   };
+
+   const handleCloseEditDialog = () => {
+      setEditDialogOpen(false);
+      setClientToEdit(null);
+   };
+
+   const handleEditClient = (updatedClient: Omit<Client, "_id">) => {
+      if (clientToEdit) {
+         updateClient(clientToEdit._id, updatedClient);
+         handleCloseEditDialog();
+      }
+   };
+
    if (isLoading) return <p>Cargando...</p>;
    if (error) return <p>Error: {error}</p>;
 
@@ -69,7 +94,10 @@ const ClientsList = () => {
                   </TableHeader>
                   <TableBody>
                      {clients.map((client) => (
-                        <TableRow key={client._id}>
+                        <TableRow
+                           key={client._id}
+                           className={client.active ? undefined : "opacity-50"}
+                        >
                            <TableCell className='font-medium'>
                               {client.name}
                            </TableCell>
@@ -82,16 +110,14 @@ const ClientsList = () => {
                            <TableCell className='text-right'>
                               <div className='flex justify-end gap-2'>
                                  <Button
-                                    onClick={() => {
-                                       alert("todavia no anda paciencia paaa");
-                                    }}
+                                    onClick={() => handleOpenEditDialog(client)}
                                     variant='outline'
                                     size='sm'
                                  >
                                     Edit
                                  </Button>
 
-                                 <Button
+                                 {/* <Button
                                     onClick={() => {
                                        alert("todavia no anda paciencia paaa");
                                     }}
@@ -99,13 +125,14 @@ const ClientsList = () => {
                                     size='sm'
                                  >
                                     Summary
-                                 </Button>
+                                 </Button> */}
                                  <Button
                                     onClick={() =>
                                        handleOpenDeleteDialog(client._id)
                                     }
-                                    variant='destructive'
+                                    variant='outline'
                                     size='sm'
+                                    className='border-red-800'
                                  >
                                     Delete
                                  </Button>
@@ -125,6 +152,14 @@ const ClientsList = () => {
                   onClose={handleCloseDeleteDialog}
                   onSubmit={deleteClient}
                   targetId={selectedClientId}
+               />
+               <UpdateClientModal
+                  isOpen={editDialogOpen}
+                  onClose={handleCloseEditDialog}
+                  onSubmit={handleEditClient}
+                  currentClient={
+                     clientToEdit || { name: "", email: "", active: false }
+                  }
                />
             </div>
          )}

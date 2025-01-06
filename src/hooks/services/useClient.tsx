@@ -1,7 +1,7 @@
 // hooks/useClients.tsx
 import { useState, useEffect } from "react";
 import { clientsService } from "@/services/clients/clientsService";
-import { Client } from "@/interfaces/clientInterface";
+import { Client, UpdateClientData } from "@/interfaces/clientInterface";
 
 export const useClients = () => {
    const [clients, setClients] = useState<Client[]>([]);
@@ -41,6 +41,23 @@ export const useClients = () => {
       }
    };
 
+   const updateClient = async (id: string, clientData: UpdateClientData) => {
+      setIsLoading(true);
+      try {
+         const updatedData = { ...clientData, _id: id };
+         await clientsService.updateClient(id, updatedData as Client);
+         await fetchClients();
+      } catch (err: unknown) {
+         setError(
+            err instanceof Error
+               ? err.message
+               : "An unknown error occurred while updating a client."
+         );
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
    const deleteClient = async (id: string) => {
       setIsLoading(true);
       try {
@@ -68,5 +85,6 @@ export const useClients = () => {
       fetchClients,
       createClient,
       deleteClient,
+      updateClient,
    };
 };
