@@ -9,9 +9,11 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
    const { userData } = useAuth();
 
-   console.log(userData);
+   if (!userData) {
+      return <Navigate to='/login' />;
+   }
 
-   return userData ? children : <Navigate to='/login' />;
+   return <>{children}</>;
 };
 
 export default PrivateRoute;

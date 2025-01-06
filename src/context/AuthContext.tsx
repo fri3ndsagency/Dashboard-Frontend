@@ -5,6 +5,7 @@ import { authService } from "../services/auth/authService";
 // Interfaz para los datos de usuario
 interface UserData {
    token: string;
+   email: string;
 }
 
 // Interfaz para el contexto de autenticación
@@ -35,9 +36,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
    const login = async (email: string, password: string): Promise<void> => {
       try {
-         const { token } = await authService.login(email, password);
-         setUserData({ token });
-         console.log("Login successful:", { token });
+         const { token, email: userEmail } = await authService.login(
+            email,
+            password
+         );
+         setUserData({ token, email: userEmail });
+         console.log("Login successful:", { token, email: userEmail });
       } catch (error: unknown) {
          if (error instanceof Error) {
             console.error("Login failed:", error.message);

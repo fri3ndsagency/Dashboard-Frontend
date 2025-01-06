@@ -5,15 +5,12 @@ import {
    FolderOpen,
    WalletMinimal,
    ChevronRight,
-   KeyRound,
 } from "lucide-react";
-
 import {
    Collapsible,
    CollapsibleContent,
    CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
 import {
    Sidebar,
    SidebarContent,
@@ -28,9 +25,8 @@ import {
    SidebarMenuSubButton,
    SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { Link } from "react-router";
 import { ModeToggle } from "./ModeToggle/mode-toggle";
-
-import { useAuth } from "@/context/AuthContext";
 
 // Menu items.
 const items = [
@@ -58,31 +54,25 @@ const items = [
 
 const itemsFooter = [
    {
-      title: "Dashboard",
-      url: "/",
+      title: "Concepts",
+      url: "/concepts",
       icon: LayoutDashboard,
    },
    {
-      title: "Clients",
-      url: "/clients",
+      title: "Users",
+      url: "/users",
       icon: User,
    },
    {
-      title: "Budgets",
-      url: "/budgets",
+      title: "Resources",
+      url: "/resources",
       icon: WalletMinimal,
-   },
-   {
-      title: "Projects",
-      url: "/projects",
-      icon: FolderOpen,
    },
 ];
 
 export function AppSidebar() {
-   const { logout } = useAuth();
    return (
-      <Sidebar variant='floating' collapsible='icon'>
+      <Sidebar variant='floating' collapsible='icon' className='px-2 py-4'>
          <SidebarContent>
             <SidebarGroup>
                <SidebarGroupLabel>
@@ -93,10 +83,10 @@ export function AppSidebar() {
                      {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                            <SidebarMenuButton asChild tooltip={item.title}>
-                              <a href={item.url}>
+                              <Link to={`${item.url}`}>
                                  <item.icon />
                                  <span>{item.title}</span>
-                              </a>
+                              </Link>
                            </SidebarMenuButton>
                         </SidebarMenuItem>
                      ))}
@@ -124,45 +114,12 @@ export function AppSidebar() {
                               {itemsFooter?.map((subItem) => (
                                  <SidebarMenuSubItem key={subItem.title}>
                                     <SidebarMenuSubButton asChild>
-                                       <a href={subItem.url}>
+                                       <Link to={`${subItem.url}`}>
                                           <span>{subItem.title}</span>
-                                       </a>
+                                       </Link>
                                     </SidebarMenuSubButton>
                                  </SidebarMenuSubItem>
                               ))}
-                           </SidebarMenuSub>
-                        </CollapsibleContent>
-                     </SidebarMenuItem>
-                  </Collapsible>
-               </SidebarMenu>
-               <SidebarMenu>
-                  <Collapsible
-                     asChild
-                     defaultOpen={false}
-                     className='group/collapsible'
-                  >
-                     <SidebarMenuItem>
-                        <CollapsibleTrigger asChild>
-                           <SidebarMenuButton tooltip='My Account'>
-                              {<KeyRound />}
-                              <span>My Account</span>
-                              <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
-                           </SidebarMenuButton>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                           <SidebarMenuSub>
-                              <SidebarMenuSubItem>
-                                 <SidebarMenuSubButton asChild>
-                                    <a href='/me'>
-                                       <span>Profile</span>
-                                    </a>
-                                 </SidebarMenuSubButton>
-                                 <SidebarMenuSubButton asChild>
-                                    <button className='w-full' onClick={logout}>
-                                       <span>Logout</span>
-                                    </button>
-                                 </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
                            </SidebarMenuSub>
                         </CollapsibleContent>
                      </SidebarMenuItem>
