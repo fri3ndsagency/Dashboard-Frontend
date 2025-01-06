@@ -13,15 +13,32 @@ import {
 } from "@/components/ui/table";
 import AddClientModal from "./AddClientModal";
 import { Client } from "@/interfaces/clientInterface";
+import DeleteDialog from "../Commons/DeleteDialog";
 
 const ClientsList = () => {
-   const { clients, isLoading, error, createClient } = useClients();
+   const { clients, isLoading, error, createClient, deleteClient } =
+      useClients();
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+   const [selectedClientId, setSelectedClientId] = useState<string | null>(
+      null
+   );
 
    const handleCreateClient = (newClient: Omit<Client, "_id">) => {
       createClient(newClient);
    };
 
+   const handleOpenDeleteDialog = (id: string) => {
+      setSelectedClientId(id);
+      setDeleteDialogOpen(true);
+   };
+
+   // Cerrar el diálogo
+   const handleCloseDeleteDialog = () => {
+      setDeleteDialogOpen(false);
+      setSelectedClientId(null);
+   };
+   
    if (isLoading) return <p>Cargando...</p>;
    if (error) return <p>Error: {error}</p>;
 
@@ -73,15 +90,7 @@ const ClientsList = () => {
                                  >
                                     Edit
                                  </Button>
-                                 <Button
-                                    onClick={() => {
-                                       alert("todavia no anda paciencia paaa");
-                                    }}
-                                    variant='outline'
-                                    size='sm'
-                                 >
-                                    Delete
-                                 </Button>
+
                                  <Button
                                     onClick={() => {
                                        alert("todavia no anda paciencia paaa");
@@ -90,6 +99,15 @@ const ClientsList = () => {
                                     size='sm'
                                  >
                                     Summary
+                                 </Button>
+                                 <Button
+                                    onClick={() =>
+                                       handleOpenDeleteDialog(client._id)
+                                    }
+                                    variant='destructive'
+                                    size='sm'
+                                 >
+                                    Delete
                                  </Button>
                               </div>
                            </TableCell>
@@ -101,6 +119,12 @@ const ClientsList = () => {
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
                   onSubmit={handleCreateClient}
+               />
+               <DeleteDialog
+                  isOpen={deleteDialogOpen}
+                  onClose={handleCloseDeleteDialog}
+                  onSubmit={deleteClient}
+                  targetId={selectedClientId}
                />
             </div>
          )}

@@ -41,6 +41,22 @@ export const useClients = () => {
       }
    };
 
+   const deleteClient = async (id: string) => {
+      setIsLoading(true);
+      try {
+         await clientsService.deleteClient(id);
+         await fetchClients();
+      } catch (err: unknown) {
+         setError(
+            err instanceof Error
+               ? err.message
+               : "An unknown error occurred while deleting a client."
+         );
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
    useEffect(() => {
       fetchClients();
    }, []);
@@ -51,5 +67,6 @@ export const useClients = () => {
       error,
       fetchClients,
       createClient,
+      deleteClient,
    };
 };

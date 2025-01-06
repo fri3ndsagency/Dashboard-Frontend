@@ -20,7 +20,7 @@ export const clientsService = {
       return response.data;
    },
 
-   createClient: async (clientData: Client) => {
+   createClient: async (clientData: Omit<Client, "_id">) => {
       const response = await axiosInstance.post(
          `${API_BASE_URL}${CLIENTS_SERVICE}`,
          clientData
