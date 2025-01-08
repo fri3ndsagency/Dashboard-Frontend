@@ -8,6 +8,7 @@ import ProjectsView from "./views/ProjectsView";
 import ClientsView from "./views/ClientsView";
 import LoginView from "./views/LoginView";
 import { AuthProvider } from "./context/AuthContext";
+import UsersView from "./views/UsersView";
 
 function App() {
    return (
@@ -32,6 +33,16 @@ function App() {
                         <PrivateRoute>
                            <Layout>
                               <ClientsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/users'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <UsersView />
                            </Layout>
                         </PrivateRoute>
                      }

@@ -14,7 +14,6 @@ export const useClients = () => {
          const data: Client[] = await clientsService.getAllClients();
          setClients(data);
       } catch (err: unknown) {
-         // Cambia 'any' por 'unknown'
          if (err instanceof Error) {
             setError(err.message);
          } else {
