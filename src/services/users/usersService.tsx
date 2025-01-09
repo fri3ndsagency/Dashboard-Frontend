@@ -19,6 +19,14 @@ export const usersService = {
       return response.data;
    },
 
+   createUser: async (userData: Omit<UpdateUserData, "_id">) => {
+      const response = await axiosInstance.post(
+         `${API_BASE_URL}${USERS_SERVICE}`,
+         userData
+      );
+      return response.data;
+   },
+
    updateUser: async (id: string, userData: UpdateUserData) => {
       const response = await axiosInstance.put(
          `${API_BASE_URL}${USERS_SERVICE}/${id}`,
