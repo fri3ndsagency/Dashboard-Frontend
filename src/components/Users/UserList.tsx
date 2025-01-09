@@ -12,7 +12,7 @@ import {
 import { useUsers } from "@/hooks/services/useUser";
 import { PlusCircle } from "lucide-react";
 import UpdateUserModal from "./UpdateUserModal";
-import { User } from "@/interfaces/userInterface";
+import { UpdateUserData, User } from "@/interfaces/userInterface";
 import DeleteDialog from "../Commons/DeleteDialog";
 import AddUserModal from "./AddUserModal";
 
@@ -41,7 +41,7 @@ const UserList = () => {
       setUserToEdit(null);
    };
 
-   const handleEditUser = (updatedUser: Omit<User, "_id">) => {
+   const handleEditUser = (updatedUser: Omit<UpdateUserData, "_id">) => {
       if (userToEdit) {
          updateUser(userToEdit._id, updatedUser);
          handleCloseEditDialog();
