@@ -13,6 +13,7 @@ interface AuthContextType {
    userData: UserData | null;
    login: (email: string, password: string) => Promise<void>;
    logout: () => void;
+   forgotPassword: (email: string) => Promise<void>;
 }
 
 // Crear el contexto con un valor inicial tipado
@@ -53,12 +54,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
    };
 
+   const forgotPassword = async (email: string): Promise<void> => {
+      try {
+         await authService.forgotPassword(email);
+         console.log("Password reset email sent");
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            console.error("Forgot password failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
+      }
+   };
+
    const logout = (): void => {
       setUserData(null);
    };
 
    return (
-      <AuthContext.Provider value={{ userData, login, logout }}>
+      <AuthContext.Provider value={{ userData, login, logout, forgotPassword }}>
          {children}
       </AuthContext.Provider>
    );

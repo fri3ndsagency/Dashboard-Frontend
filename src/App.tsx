@@ -9,6 +9,7 @@ import ClientsView from "./views/ClientsView";
 import LoginView from "./views/LoginView";
 import { AuthProvider } from "./context/AuthContext";
 import UsersView from "./views/UsersView";
+import ForgotPasswordView from "./views/ForgotPasswordView";
 
 function App() {
    return (
@@ -17,6 +18,10 @@ function App() {
             <Router>
                <Routes>
                   <Route path='/login' element={<LoginView />} />
+                  <Route
+                     path='/forgot-password'
+                     element={<ForgotPasswordView />}
+                  />
                   <Route
                      path='/'
                      element={

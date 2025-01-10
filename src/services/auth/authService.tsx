@@ -22,4 +22,24 @@ export const authService = {
          throw new Error(error.response?.data?.message || "Login failed");
       }
    },
+
+   forgotPassword: async (email: string) => {
+      try {
+         const response = await axios.post(
+            `${API_BASE_URL}${AUTH_SERVICE}/forgotPassword`,
+            {
+               email,
+            }
+         );
+         return response.data;
+      } catch (error: any) {
+         console.error(
+            "Error during forgot password:",
+            error.response?.data?.message || error.message
+         );
+         throw new Error(
+            error.response?.data?.message || "Forgot password failed"
+         );
+      }
+   },
 };
