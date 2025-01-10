@@ -10,32 +10,42 @@ import {
 } from "@/components/ui/card";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import logo from "@/assets/logo.svg";
 
-const Login = () => {
-   const [email, setEmail] = useState("");
+const ResetPassword = () => {
    const [password, setPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState<string | null>(null);
 
+   const { resetPassword } = useAuth();
    const navigate = useNavigate();
-   const [showPassword, setShowPassword] = useState(false);
-
-   const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-   };
-
-   const { login } = useAuth();
+   const tokenParam = useParams();
+   const token = tokenParam.token;
 
    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       setIsLoading(true);
       setError(null);
-      try {
-         await login(email, password);
+
+      if (!token) {
+         setError("Invalid or missing token.");
          setIsLoading(false);
-         navigate("/");
+         return;
+      }
+
+      if (password !== confirmPassword) {
+         setError("Passwords do not match.");
+         setIsLoading(false);
+         return;
+      }
+
+      try {
+         await resetPassword(password, token);
+         setIsLoading(false);
+         navigate("/login");
       } catch (err) {
          if (err instanceof Error) {
             setError(err.message);
@@ -44,6 +54,10 @@ const Login = () => {
          }
          setIsLoading(false);
       }
+   };
+
+   const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
    };
 
    return (
@@ -58,21 +72,10 @@ const Login = () => {
                   />
                </div>
                <h2 className='text-2xl font-bold text-center'>
-                  Login to access
+                  Reset your password
                </h2>
             </CardHeader>
             <CardContent className='space-y-4'>
-               <div className='space-y-2'>
-                  <Label htmlFor='email'>Email</Label>
-                  <Input
-                     id='email'
-                     type='email'
-                     placeholder='name@example.com'
-                     value={email}
-                     onChange={(e) => setEmail(e.target.value)}
-                     required
-                  />
-               </div>
                <div className='space-y-2'>
                   <Label htmlFor='password'>Password</Label>
                   <div className='relative'>
@@ -102,19 +105,45 @@ const Login = () => {
                      </Button>
                   </div>
                </div>
+               <div className='space-y-2'>
+                  <Label htmlFor='confirmPassword'>Confirm Password</Label>
+                  <div className='relative'>
+                     <Input
+                        id='confirmPassword'
+                        placeholder='**********'
+                        type={showPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                     />
+                     <Button
+                        type='button'
+                        variant='ghost'
+                        size='icon'
+                        className='absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent'
+                        onClick={togglePasswordVisibility}
+                        aria-label={
+                           showPassword ? "Hide password" : "Show password"
+                        }
+                     >
+                        {showPassword ? (
+                           <EyeOffIcon className='w-4 h-4 text-gray-500' />
+                        ) : (
+                           <EyeIcon className='w-4 h-4 text-gray-500' />
+                        )}
+                     </Button>
+                  </div>
+               </div>
             </CardContent>
             <CardFooter className='flex flex-col'>
                <Button onClick={handleSubmit} className='w-full'>
-                  {isLoading ? "Please wait..." : "Login"}
+                  {isLoading ? "Please wait..." : "Confirm new password"}
                </Button>
                {error && <p className='mt-2 text-sm text-red-600'>{error}</p>}
-               <Button className='mt-3 text-foreground' variant='link'>
-                  <Link to='/forgot-password'>¿Forgot your password?</Link>
-               </Button>
             </CardFooter>
          </Card>
       </div>
    );
 };
 
-export default Login;
+export default ResetPassword;

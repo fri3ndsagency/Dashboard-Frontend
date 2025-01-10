@@ -6,20 +6,19 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const authService = {
    login: async (email: string, password: string) => {
       try {
-         const response = await axios.post(
-            `${API_BASE_URL}${AUTH_SERVICE}/login`,
-            {
-               email,
-               password,
-            }
-         );
+         const response = await axios.post(`${API_BASE_URL}${AUTH_SERVICE}`, {
+            email,
+            password,
+         });
          return response.data;
-      } catch (error: any) {
-         console.error(
-            "Error during login:",
-            error.response?.data?.message || error.message
-         );
-         throw new Error(error.response?.data?.message || "Login failed");
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            console.error("Login failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
       }
    },
 
@@ -32,14 +31,35 @@ export const authService = {
             }
          );
          return response.data;
-      } catch (error: any) {
-         console.error(
-            "Error during forgot password:",
-            error.response?.data?.message || error.message
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            console.error("Forgot password failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
+      }
+   },
+
+   resetPassword: async (newPassword: string, token: string) => {
+      try {
+         const response = await axios.post(
+            `${API_BASE_URL}${AUTH_SERVICE}/resetPassword`,
+            {
+               newPassword,
+               token,
+            }
          );
-         throw new Error(
-            error.response?.data?.message || "Forgot password failed"
-         );
+         return response.data;
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            console.error("Reset failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
       }
    },
 };

@@ -4,7 +4,8 @@ import { authService } from "../services/auth/authService";
 
 // Interfaz para los datos de usuario
 interface UserData {
-   token: string;
+   accessToken: string;
+   refreshToken: string;
    email: string;
 }
 
@@ -14,6 +15,7 @@ interface AuthContextType {
    login: (email: string, password: string) => Promise<void>;
    logout: () => void;
    forgotPassword: (email: string) => Promise<void>;
+   resetPassword: (token: string, newPassword: string) => Promise<void>;
 }
 
 // Crear el contexto con un valor inicial tipado
@@ -37,12 +39,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
    const login = async (email: string, password: string): Promise<void> => {
       try {
-         const { token, email: userEmail } = await authService.login(
-            email,
-            password
-         );
-         setUserData({ token, email: userEmail });
-         console.log("Login successful:", { token, email: userEmail });
+         const response = await authService.login(email, password);
+         const { accessToken, refreshToken } = response.data;
+
+         setUserData({ accessToken, refreshToken, email });
+         console.log("Login successful:", { accessToken, refreshToken, email });
       } catch (error: unknown) {
          if (error instanceof Error) {
             console.error("Login failed:", error.message);
@@ -69,12 +70,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
    };
 
+   const resetPassword = async (newPassword: string, token: string) => {
+      try {
+         const response = await authService.resetPassword(newPassword, token);
+         console.log(response);
+      } catch (error) {
+         if (error instanceof Error) {
+            console.error("Reset password failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
+      }
+   };
+
    const logout = (): void => {
       setUserData(null);
    };
 
    return (
-      <AuthContext.Provider value={{ userData, login, logout, forgotPassword }}>
+      <AuthContext.Provider
+         value={{ userData, login, logout, forgotPassword, resetPassword }}
+      >
          {children}
       </AuthContext.Provider>
    );

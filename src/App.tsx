@@ -10,6 +10,7 @@ import LoginView from "./views/LoginView";
 import { AuthProvider } from "./context/AuthContext";
 import UsersView from "./views/UsersView";
 import ForgotPasswordView from "./views/ForgotPasswordView";
+import ResetPasswordView from "./views/ResetPasswordView";
 
 function App() {
    return (
@@ -21,6 +22,10 @@ function App() {
                   <Route
                      path='/forgot-password'
                      element={<ForgotPasswordView />}
+                  />
+                  <Route
+                     path='/reset-password/:token'
+                     element={<ResetPasswordView />}
                   />
                   <Route
                      path='/'
