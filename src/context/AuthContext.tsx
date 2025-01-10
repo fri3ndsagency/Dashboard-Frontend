@@ -16,6 +16,7 @@ interface AuthContextType {
    logout: () => void;
    forgotPassword: (email: string) => Promise<void>;
    resetPassword: (token: string, newPassword: string) => Promise<void>;
+   refreshAccessToken: () => Promise<void>;
 }
 
 // Crear el contexto con un valor inicial tipado
@@ -89,9 +90,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUserData(null);
    };
 
+   const refreshAccessToken = async (): Promise<void> => {
+      if (!userData?.refreshToken) {
+         console.error("No refresh token available.");
+         logout();
+         return;
+      }
+
+      try {
+         const response = await authService.refreshToken(userData.refreshToken);
+         const { accessToken } = response.data.data;
+
+         setUserData((prev) => (prev ? { ...prev, accessToken } : null));
+      } catch (error) {
+         console.error("Failed to refresh token:", error);
+         logout();
+      }
+   };
+
    return (
       <AuthContext.Provider
-         value={{ userData, login, logout, forgotPassword, resetPassword }}
+         value={{
+            userData,
+            login,
+            logout,
+            forgotPassword,
+            resetPassword,
+            refreshAccessToken,
+         }}
       >
          {children}
       </AuthContext.Provider>

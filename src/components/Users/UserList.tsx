@@ -25,6 +25,8 @@ const UserList = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+   console.log(users)
+
    //Crear
    const handleCreateUser = (newClient: Omit<User, "_id">) => {
       createUser(newClient);

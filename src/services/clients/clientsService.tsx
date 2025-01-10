@@ -3,26 +3,21 @@ import axiosInstance from "@/services/axiosConfig";
 import { Client, UpdateClientData } from "@/interfaces/clientInterface";
 
 const CLIENTS_SERVICE = import.meta.env.VITE_SERVICE_CLIENTS;
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const clientsService = {
    getAllClients: async () => {
-      const response = await axiosInstance.get(
-         `${API_BASE_URL}${CLIENTS_SERVICE}`
-      );
+      const response = await axiosInstance.get(`${CLIENTS_SERVICE}`);
       return response.data;
    },
 
    getClientById: async (id: string) => {
-      const response = await axiosInstance.get(
-         `${API_BASE_URL}${CLIENTS_SERVICE}/${id}`
-      );
+      const response = await axiosInstance.get(`${CLIENTS_SERVICE}/${id}`);
       return response.data;
    },
 
    createClient: async (clientData: Omit<Client, "_id">) => {
       const response = await axiosInstance.post(
-         `${API_BASE_URL}${CLIENTS_SERVICE}`,
+         `${CLIENTS_SERVICE}`,
          clientData
       );
       return response.data;
@@ -30,16 +25,14 @@ export const clientsService = {
 
    updateClient: async (id: string, clientData: UpdateClientData) => {
       const response = await axiosInstance.put(
-         `${API_BASE_URL}${CLIENTS_SERVICE}/${id}`,
+         `${CLIENTS_SERVICE}/${id}`,
          clientData
       );
       return response.data;
    },
 
    deleteClient: async (id: string) => {
-      const response = await axiosInstance.delete(
-         `${API_BASE_URL}${CLIENTS_SERVICE}/${id}`
-      );
+      const response = await axiosInstance.delete(`${CLIENTS_SERVICE}/${id}`);
       return response.data;
    },
 };

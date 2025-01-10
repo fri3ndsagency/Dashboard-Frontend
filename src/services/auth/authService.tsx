@@ -62,4 +62,24 @@ export const authService = {
          }
       }
    },
+
+   refreshToken: async (refreshToken: string) => {
+      try {
+         const response = await axios.post(
+            `${API_BASE_URL}${AUTH_SERVICE}/refreshToken`,
+            {
+               refreshToken,
+            }
+         );
+         return response.data;
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            console.error("Token refresh failed:", error.message);
+            throw error;
+         } else {
+            console.error("An unexpected error occurred");
+            throw new Error("An unexpected error occurred");
+         }
+      }
+   },
 };
