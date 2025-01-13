@@ -94,7 +94,7 @@ export function AppSidebar() {
                </SidebarGroupContent>
             </SidebarGroup>
             <SidebarGroup>
-               <SidebarGroupLabel>This meh not so much</SidebarGroupLabel>
+               <SidebarGroupLabel className="pointer-events-none">This meh not so much</SidebarGroupLabel>
                <SidebarMenu>
                   <Collapsible
                      asChild

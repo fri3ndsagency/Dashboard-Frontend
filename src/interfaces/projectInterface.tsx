@@ -5,7 +5,7 @@ export interface Project {
    active: boolean;
 }
 
-export interface updateProjectData {
+export interface UpdateProjectData {
    name?: string;
    client?: object;
    active: boolean;
