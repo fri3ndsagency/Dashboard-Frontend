@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { resourceService } from "@/services/resources/resourcesTypesService";
-import {
-   Resource,
-   UpdateResourceData,
-} from "@/interfaces/resourcesTypesInterface";
+import { Resource } from "@/interfaces/resourcesTypesInterface";
 
 export const useResourcesTypes = () => {
    const [resources, setResources] = useState<Resource[]>([]);
