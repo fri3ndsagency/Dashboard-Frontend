@@ -10,6 +10,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
 
 import { UpdateUserData } from "@/interfaces/userInterface";
 
@@ -29,25 +36,28 @@ function UpdateUserModal({
    const [firstName, setFirstName] = useState(currentUser.firstName);
    const [lastName, setLastName] = useState(currentUser.lastName);
    const [email, setEmail] = useState(currentUser.email);
+   const [role, setRole] = useState(currentUser.role);
 
    useEffect(() => {
       if (isOpen) {
          setFirstName(currentUser.firstName ?? "");
          setLastName(currentUser.lastName ?? "");
          setEmail(currentUser.email ?? "");
+         setRole(currentUser.role ?? "");
       }
    }, [isOpen]);
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!firstName || !lastName || !email) {
-         alert("Name and email are required.");
+      if (!firstName || !lastName || !email || !role) {
+         alert("All fields are required.");
          return;
       }
-      onSubmit({ firstName, lastName, email });
+      onSubmit({ firstName, lastName, email, role });
       setFirstName("");
       setLastName("");
       setEmail("");
+      setRole("");
 
       onClose();
    };
@@ -93,6 +103,23 @@ function UpdateUserModal({
                         onChange={(e) => setEmail(e.target.value)}
                         className='col-span-3'
                      />
+                  </div>
+                  <div className='grid items-center grid-cols-4 gap-4'>
+                     <Label htmlFor='email' className='text-right'>
+                        Role
+                     </Label>
+                     <Select value={role} onValueChange={setRole}>
+                        <SelectTrigger className='col-span-3'>
+                           <SelectValue placeholder='Select Role' />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem value='Member'>Member</SelectItem>
+                           <SelectItem value='Client'>Client</SelectItem>
+                           <SelectItem value='Admin'>Admin</SelectItem>
+                           <SelectItem value='Guest'>Guest</SelectItem>
+                           <SelectItem value='Moderator'>Moderator</SelectItem>
+                        </SelectContent>
+                     </Select>
                   </div>
                </div>
                <DialogFooter>

@@ -25,8 +25,6 @@ const UserList = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-   console.log(users)
-
    //Crear
    const handleCreateUser = (newClient: Omit<User, "_id">) => {
       createUser(newClient);
@@ -85,7 +83,7 @@ const UserList = () => {
                      <TableRow>
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
-
+                        <TableHead>Role</TableHead>
                         <TableHead className='opacity-0'>Actions</TableHead>
                      </TableRow>
                   </TableHeader>
@@ -96,6 +94,7 @@ const UserList = () => {
                               {user.firstName} {user.lastName}
                            </TableCell>
                            <TableCell>{user.email}</TableCell>
+                           <TableCell>{user.role}</TableCell>
 
                            <TableCell className='text-right'>
                               <div className='flex justify-end gap-2'>

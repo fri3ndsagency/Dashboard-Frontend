@@ -7,7 +7,7 @@ const CLIENTS_SERVICE = import.meta.env.VITE_SERVICE_CLIENTS;
 export const clientsService = {
    getAllClients: async () => {
       const response = await axiosInstance.get(`${CLIENTS_SERVICE}`);
-      return response.data;
+      return response.data.data;
    },
 
    getClientById: async (id: string) => {

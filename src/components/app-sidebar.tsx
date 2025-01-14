@@ -64,8 +64,8 @@ const itemsFooter = [
       icon: User,
    },
    {
-      title: "Resources",
-      url: "/resources",
+      title: "Resources Types",
+      url: "/resources-types",
       icon: WalletMinimal,
    },
 ];
@@ -94,7 +94,9 @@ export function AppSidebar() {
                </SidebarGroupContent>
             </SidebarGroup>
             <SidebarGroup>
-               <SidebarGroupLabel className="pointer-events-none">This meh not so much</SidebarGroupLabel>
+               <SidebarGroupLabel className='pointer-events-none'>
+                  This meh not so much
+               </SidebarGroupLabel>
                <SidebarMenu>
                   <Collapsible
                      asChild

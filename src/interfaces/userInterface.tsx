@@ -3,11 +3,14 @@ export interface User {
    firstName: string;
    lastName: string;
    email: string;
-   password: string;
+   password?: string;
+   role: string;
+   status?: string;
 }
 
 export interface UpdateUserData {
    firstName?: string;
    lastName?: string;
    email?: string;
+   role?: string;
 }

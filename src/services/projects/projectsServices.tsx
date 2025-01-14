@@ -9,7 +9,7 @@ export const projectsService = {
       const response = await axiosInstance.get(
          `${API_BASE_URL}${PROJECTS_SERVICE}`
       );
-      return response.data;
+      return response.data.data;
    },
 
    getProjectById: async (id: string) => {

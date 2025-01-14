@@ -9,6 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
 import { User } from "@/interfaces/userInterface";
 
 interface AddUserModalProps {
@@ -20,19 +27,19 @@ interface AddUserModalProps {
 function AddUserModal({ isOpen, onClose, onSubmit }: AddUserModalProps) {
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
-   const [password, setPassword] = useState("");
+   const [role, setRole] = useState("");
    const [email, setEmail] = useState("");
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!firstName || !lastName || !email) {
+      if (!firstName || !lastName || !email || !role) {
          alert("All fields are required.");
          return;
       }
-      onSubmit({ firstName, lastName, email, password });
+      onSubmit({ firstName, lastName, email, role });
       setFirstName("");
       setLastName("");
-      setPassword("");
+
       setEmail("");
 
       onClose();
@@ -81,16 +88,21 @@ function AddUserModal({ isOpen, onClose, onSubmit }: AddUserModalProps) {
                      />
                   </div>
                   <div className='grid items-center grid-cols-4 gap-4'>
-                     <Label htmlFor='password' className='text-right'>
-                        Password
+                     <Label htmlFor='email' className='text-right'>
+                        Role
                      </Label>
-                     <Input
-                        id='password'
-                        type='password'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className='col-span-3'
-                     />
+                     <Select value={role} onValueChange={setRole}>
+                        <SelectTrigger className='col-span-3'>
+                           <SelectValue placeholder='Select Role' />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem value='Member'>Member</SelectItem>
+                           <SelectItem value='Client'>Client</SelectItem>
+                           <SelectItem value='Admin'>Admin</SelectItem>
+                           <SelectItem value='Guest'>Guest</SelectItem>
+                           <SelectItem value='Moderator'>Moderator</SelectItem>
+                        </SelectContent>
+                     </Select>
                   </div>
                </div>
                <DialogFooter>

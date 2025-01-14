@@ -11,6 +11,10 @@ import { AuthProvider } from "./context/AuthContext";
 import UsersView from "./views/UsersView";
 import ForgotPasswordView from "./views/ForgotPasswordView";
 import ResetPasswordView from "./views/ResetPasswordView";
+import BudgetsView from "./views/BudgetsView";
+import ConceptsView from "./views/ConceptsView";
+import ResourcesTypesView from "./views/ResourcesTypesView";
+import ProfileView from "./views/ProfileView";
 
 function App() {
    return (
@@ -63,6 +67,46 @@ function App() {
                         <PrivateRoute>
                            <Layout>
                               <ProjectsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/budgets'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <BudgetsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/concepts'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <ConceptsView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/resources-types'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <ResourcesTypesView />
+                           </Layout>
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path='/me'
+                     element={
+                        <PrivateRoute>
+                           <Layout>
+                              <ProfileView />
                            </Layout>
                         </PrivateRoute>
                      }

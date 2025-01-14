@@ -33,6 +33,7 @@ const ClientsList = () => {
    const [editDialogOpen, setEditDialogOpen] = useState(false);
    const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
 
+
    const handleCreateClient = (newClient: Omit<Client, "_id">) => {
       createClient(newClient);
    };

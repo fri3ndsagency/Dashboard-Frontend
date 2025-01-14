@@ -44,7 +44,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
          const { accessToken, refreshToken } = response.data;
 
          setUserData({ accessToken, refreshToken, email });
-         console.log("Login successful:", { accessToken, refreshToken, email });
       } catch (error: unknown) {
          if (error instanceof Error) {
             console.error("Login failed:", error.message);

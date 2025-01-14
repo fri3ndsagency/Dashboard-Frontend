@@ -42,8 +42,9 @@ export const useProjects = () => {
    const updateProject = async (id: string, projectData: UpdateProjectData) => {
       setIsLoading(true);
       try {
+         // No es necesario convertir a Project, usa el tipo UpdateProjectData directamente
          const updatedData = { ...projectData, _id: id };
-         await projectsService.updateProject(id, updatedData as Project);
+         await projectsService.updateProject(id, updatedData); // Usa UpdateProjectData
          await fetchProjects();
       } catch (err: unknown) {
          setError(

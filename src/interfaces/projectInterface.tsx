@@ -1,12 +1,14 @@
+import { Client } from "./clientInterface";
 export interface Project {
    _id: string;
    name: string;
-   client: object;
-   active: boolean;
+   client: Client;
+   state?: string;
 }
 
 export interface UpdateProjectData {
+   _id?: string;
    name?: string;
-   client?: object;
-   active: boolean;
+   client?: string;
+   state?: string;
 }

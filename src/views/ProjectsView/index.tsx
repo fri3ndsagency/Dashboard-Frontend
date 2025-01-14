@@ -1,9 +1,9 @@
-
+import ProjectList from "@/components/Projects/ProjectList";
 
 const ProjectsView = () => {
    return (
       <div>
-         Projects
+         <ProjectList />
       </div>
    );
 };
