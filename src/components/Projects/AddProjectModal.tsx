@@ -97,7 +97,7 @@ function AddProjectModal({ isOpen, onClose, onSubmit }: AddProjectModalProps) {
                   </div>
                </div>
                <DialogFooter>
-                  <Button type='submit'>Add Project</Button>
+                  <Button type='submit'>Confirm</Button>
                </DialogFooter>
             </form>
          </DialogContent>

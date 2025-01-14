@@ -122,7 +122,7 @@ function UpdateProjectModal({
                </div>
 
                <DialogFooter>
-                  <Button type='submit'>Update User</Button>
+                  <Button type='submit'>Confirm</Button>
                </DialogFooter>
             </form>
          </DialogContent>

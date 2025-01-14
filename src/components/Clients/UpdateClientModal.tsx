@@ -94,7 +94,7 @@ function UpdateClientModal({
                   </div>
                </div>
                <DialogFooter>
-                  <Button type='submit'>Update Client</Button>
+                  <Button type='submit'>Confirm</Button>
                </DialogFooter>
             </form>
          </DialogContent>

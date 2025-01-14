@@ -106,7 +106,7 @@ function AddUserModal({ isOpen, onClose, onSubmit }: AddUserModalProps) {
                   </div>
                </div>
                <DialogFooter>
-                  <Button type='submit'>Add User</Button>
+                  <Button type='submit'>Confirm</Button>
                </DialogFooter>
             </form>
          </DialogContent>

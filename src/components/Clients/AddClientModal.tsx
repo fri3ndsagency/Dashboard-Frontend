@@ -67,7 +67,7 @@ function AddClientModal({ isOpen, onClose, onSubmit }: AddClientModalProps) {
                   </div>
                </div>
                <DialogFooter>
-                  <Button type='submit'>Add Client</Button>
+                  <Button type='submit'>Confirm</Button>
                </DialogFooter>
             </form>
          </DialogContent>
